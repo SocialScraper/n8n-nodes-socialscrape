@@ -1,0 +1,21 @@
+# Runs n8n's community package scanner against the version on npm. This is the
+# check n8n runs when it reviews a node for verification: provenance first,
+# then its lint rules on the source the provenance names and on the tarball.
+name: n8n package scan
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Scan the published package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: npx --yes @n8n/scan-community-package n8n-nodes-socialscrape

@@ -1,0 +1,33 @@
+{
+	"node": "n8n-nodes-socialscrape.socialScrape",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing & Content", "Analytics"],
+	"alias": [
+		"social media",
+		"scraper",
+		"TikTok",
+		"Instagram",
+		"YouTube",
+		"Twitter",
+		"X",
+		"LinkedIn",
+		"Reddit",
+		"Facebook",
+		"transcript",
+		"comments",
+		"profile"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://socialscrape.dev/templates/install?utm_source=n8n&utm_medium=package&utm_campaign=n8n-nodes-socialscrape"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://socialscrape.dev/templates?utm_source=n8n&utm_medium=package&utm_campaign=n8n-nodes-socialscrape"
+			}
+		]
+	}
+}

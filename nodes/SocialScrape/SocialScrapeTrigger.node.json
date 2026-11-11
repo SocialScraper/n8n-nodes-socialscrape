@@ -1,0 +1,28 @@
+{
+	"node": "n8n-nodes-socialscrape.socialScrapeTrigger",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing & Content", "Analytics"],
+	"alias": [
+		"social media",
+		"monitor",
+		"new post",
+		"new video",
+		"webhook",
+		"TikTok",
+		"Instagram",
+		"YouTube"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://socialscrape.dev/templates/install?utm_source=n8n&utm_medium=package&utm_campaign=n8n-nodes-socialscrape"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://socialscrape.dev/templates/trigger?utm_source=n8n&utm_medium=package&utm_campaign=n8n-nodes-socialscrape"
+			}
+		]
+	}
+}

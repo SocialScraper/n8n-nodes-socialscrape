@@ -1,0 +1,57 @@
+# Publishes n8n-nodes-socialscrape to npm with a provenance statement.
+#
+# n8n accepts a verified community node only when the package was published
+# from GitHub Actions with provenance (since 2026-05-01); a publish from a
+# laptop is refused by its scanner. `npm run release` is `n8n-node release`:
+# inside Actions it lints, builds and runs `npm publish` with provenance on.
+#
+# To release: set the version in package.json, then publish a GitHub release
+# tagged v<version> (or run this workflow by hand from the Actions tab).
+#
+# npm sign-in, either of:
+#   1. The NPM_TOKEN repository secret (a granular token that may publish this
+#      package). This is what the first release used.
+#   2. npm Trusted Publishing: on npmjs.com open the package settings, add a
+#      Trusted Publisher for GitHub Actions (owner SocialScraper, repository
+#      n8n-nodes-socialscrape, workflow publish.yml), then delete the NPM_TOKEN
+#      secret. No stored token is needed after that.
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # mints the OIDC token npm signs the provenance statement with
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Trusted Publishing needs npm 11.5.1 or later; the runner's npm can be older.
+      - run: npm install -g npm@latest
+
+      - run: npm ci --ignore-scripts
+
+      - name: The release tag is the package version
+        if: github.event_name == 'release'
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: test "v$(node -p "require('./package.json').version")" = "$TAG"
+
+      - name: Lint, build and publish with provenance
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "$NPM_TOKEN" ]; then npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"; fi
+          npm run release
